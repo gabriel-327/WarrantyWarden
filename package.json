@@ -1,0 +1,12 @@
+{
+  "name": "warranty-warden",
+  "private": true,
+  "workspaces": ["server", "client"],
+  "scripts": {
+    "dev": "concurrently \"npm:dev --prefix server\" \"npm:dev --prefix client\"",
+    "install-all": "npm install --prefix server && npm install --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
