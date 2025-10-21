@@ -12,8 +12,8 @@
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/username/warrantywarden.git
-   cd warrantywarden
+   git clone https://github.com/Gabriel-327/WarrantyWarden.git
+   cd WarrantyWarden
    ```
 
 2. **Install the dependencies:**
@@ -22,6 +22,7 @@
    npm install
    cd backend
    npm i multer
+   cd ..
    ```
 
 3. **Start backend server:**
@@ -34,6 +35,7 @@
 
    ```bash
    cd frontend/
+   npm install
    npm run dev
    ```
 
