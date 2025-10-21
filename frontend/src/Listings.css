@@ -67,7 +67,7 @@ p {
   background: transparent;
   border: 2px solid var(--danger);
   padding: 8px 14px;
-  margin-top: 63px;
+  margin-top: 0px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 700;
@@ -411,3 +411,21 @@ body, html {
   .listing-item::after { display: none; }
 }
 
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* remove default margin on headings */
+h1, h2, h3, h4, h5, h6, p {
+  margin-top: 0 !important;
+}
+
+/* top-bar spacing control */
+.top-bar,
+.listings-page,
+.gator-logo {
+  margin-top: 14px;
+  padding-top: 0 !important;
+}
