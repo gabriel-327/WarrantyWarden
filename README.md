@@ -1,22 +1,42 @@
 # WarrantyWarden
 
-Minimal MERN scaffold added (Express + Mongoose server, Vite + React client).
+## Setup Instructions
 
-Quick start (PowerShell):
+### Prerequisites
 
-```powershell
-# install server and client deps
-npm run install-all
+- Node.js (v16.0.0 or later)
+- npm (comes with Node.js)
 
-# start both in development (server nodemon, client vite)
-npm run dev
-```
+### Getting Started
 
-Server:
-- `server` runs on port 5000 by default. Environment example: `server/.env.example`.
-Client:
-- `client` runs on port 3000 and proxies `/api` to the server.
+1. **Clone the repository:**
 
-Next steps:
-- Provide a MongoDB connection string in `server/.env` or run a local MongoDB instance.
-- If you want a different stack or CI, request changes and I'll update the scaffold.
+   ```bash
+   git clone https://github.com/username/warrantywarden.git
+   cd warrantywarden
+   ```
+
+2. **Install the dependencies:**
+
+   ```bash
+   npm install
+   cd backend
+   npm i multer
+   ```
+
+3. **Start backend server:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Start frontend server:**
+
+   ```bash
+   cd frontend/
+   npm run dev
+   ```
+
+## Conclusion
+
+You should now be able to add your items to the server (mongodb) as well as remove.

@@ -1,0 +1,431 @@
+/* ====== Theme tokens ====== */
+:root {
+  --bg: #0f1113;
+  --panel: #171a1e;
+  --panel-2: #1b1f24;
+  --muted: #a6a6a6;
+  --text: #e8e8e8;
+  --border: #2a2f36;
+  --accent: #ffd54a;          /* gold accent (matches logo) */
+  --accent-2: #04a4cc;        /* blue-teal used in Manufacturer */
+  --link: #7fb8ff;
+  --danger: #ff4d4f;
+  --ok: #12b886;
+
+  --radius: 12px;
+  --shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+/* ====== Base ====== */
+* { box-sizing: border-box; }
+
+body {
+  background: radial-gradient(1200px 500px at 50% -20%, #1a1f26 0%, var(--bg) 55%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ====== Header / Logo ====== */
+.gator-logo {
+  width: 420px;
+  max-width: 85%;
+  margin: 80px auto 6px auto;
+  display: block;
+}
+
+/* ====== Page container ====== */
+.listings-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1100px;
+  width: 92%;
+  margin: 0 auto 80px auto;
+  padding: 0 12px 40px 12px;
+  text-align: center;
+  background: transparent;
+  color: var(--text);
+}
+
+p {
+  font-size: 1.02rem;
+  color: var(--muted);
+  margin: 8px 0 18px 0;
+}
+
+/* ====== Logout ====== */
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 10px 6px 0 0;
+}
+.logout-btn {
+  color: #fff;
+  background: transparent;
+  border: 2px solid var(--danger);
+  padding: 8px 14px;
+  margin-top: 0px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all .18s ease;
+}
+.logout-btn:hover {
+  background: #ff2d03;
+  border-color: #ff2d03;
+}
+
+/* ====== Search ====== */
+.search-bar-container {
+  margin: 18px auto 8px auto;
+  width: 100%;
+  max-width: 620px;
+}
+.search-bar-container input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.search-bar-container input:focus {
+  border-color: #2e7ddf;
+  box-shadow: 0 0 0 3px rgba(46,125,223,0.18);
+}
+
+/* ====== Add New Item form ====== */
+.listing-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;                   /* space between boxes */
+  margin: 8px 0 16px 0;
+}
+
+.listing-form input[type="text"],
+.listing-form input[type="date"],
+.listing-form input[type="file"] {
+  height: 30px;
+  font-size: 0.95rem;
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.listing-form input[type="text"]::placeholder,
+.listing-form input[type="date"]::placeholder {
+  color: #6f7a86;
+}
+.listing-form input:focus {
+  border-color: #2e7ddf;
+  box-shadow: 0 0 0 3px rgba(46,125,223,0.18);
+}
+
+/* Submit centered on its own row */
+.submit-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+.submit-container button {
+  background: linear-gradient(180deg, var(--accent) 0%, #f3c738 100%);
+  color: #1a1a1a;
+  border: none;
+  font-weight: 700;
+  padding: 8px 18px;
+  height: 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255,213,74,0.17);
+  transition: transform .08s ease, box-shadow .18s ease, filter .18s ease;
+}
+.submit-container button:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(255,213,74,0.25);
+}
+.submit-container button:active {
+  transform: translateY(1px);
+}
+
+/* ====== Cards grid ====== */
+.listings-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 14px;
+  width: 100%;
+}
+
+/* ====== Card ====== */
+.listing-item {
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--border);
+  padding: 16px 16px 18px 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.listing-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+  border-color: #2b3340;
+}
+
+.listing-image {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #121417;
+}
+
+.listing-info {
+  margin-top: 12px;
+  color: #cfd6de;
+  text-align: center;
+}
+.listing-info h2 {
+  font-size: 1.12rem;
+  color: #69a6ff;
+  font-weight: 800;
+  margin: 6px 0 6px 0;
+}
+.listing-info p {
+  font-size: 0.92rem;
+  color: #b8c0c8;
+  margin: 4px 0;
+}
+.price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--accent-2);
+  margin-top: 8px;
+}
+
+/* small text helpers inside cards (e.g., Expires, link) */
+.listing-info a {
+  color: var(--link);
+  text-decoration: underline;
+}
+.listing-info a:hover { opacity: .9; }
+
+/* ====== Card buttons ====== */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.buy-btn,
+.report-btn {
+  background: #242a31;
+  color: #e8e8e8;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .08s ease;
+}
+.buy-btn:hover { background: #223a29; border-color: #234b2f; }
+.report-btn:hover { background: #3a2222; border-color: #4b2323; }
+.buy-btn:active,
+.report-btn:active { transform: translateY(1px); }
+
+/* ====== Responsive ====== */
+@media (max-width: 1024px) {
+  .listings-container { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .gator-logo { width: 320px; margin-top: 48px; }
+  .listings-container { grid-template-columns: 1fr; }
+  .submit-container button { width: 100%; }
+}
+
+
+/* === Layout Centering === */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(1200px 500px at 50% -20%, #1a1f26 0%, var(--bg) 55%);
+}
+
+/* Center page content both vertically & horizontally */
+.listings-page {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1100px;
+  padding-top: 0px;
+}
+
+/* Make "Add a New Item" centered and separated */
+.listing-form {
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 12px 0 16px 0;
+}
+
+/* === Fix Add Item button centering === */
+.submit-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* === Adjust image proportions === */
+.listing-image {
+  width: 100%;
+  height: 270px;            /* slightly taller to fit badge */
+  object-fit: contain;      /* show full image, no crop */
+  background-color: #141619;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+/* ====== 3D stage so tiles can pop a bit ====== */
+.listings-container {
+  perspective: 900px; /* lets inner elements use translateZ */
+}
+
+/* Smooth, springy transitions */
+.listing-item {
+  position: relative;
+  transform-style: preserve-3d;
+  transition:
+    transform .38s cubic-bezier(.2,.8,.2,1),
+    box-shadow .38s cubic-bezier(.2,.8,.2,1),
+    border-color .3s ease,
+    filter .3s ease;
+  overflow: hidden; /* for shine sweep */
+}
+
+/* Pop, lift, and richer shadow on hover */
+.listing-item:hover {
+  transform: translateY(-10px) scale(1.015) rotateX(1.2deg);
+  box-shadow: 0 28px 60px rgba(0,0,0,.55);
+  border-color: #2f3947;
+  filter: saturate(1.06);
+}
+
+/* Subtle zoom of the image "toward" the user */
+.listing-item .listing-image {
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .3s ease;
+  transform-origin: center;
+}
+.listing-item:hover .listing-image {
+  transform: translateZ(24px) scale(1.05);
+  filter: brightness(1.03);
+}
+
+/* Title pops in slightly */
+.listing-item .listing-info h2 {
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), color .25s ease;
+  transform-origin: center;
+}
+.listing-item:hover .listing-info h2 {
+  transform: translateZ(14px);
+  color: #8eb9ff; /* a touch brighter */
+}
+
+/* Button group rises a hair for depth */
+.listing-item .button-group {
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+  transform: translateZ(10px);
+  opacity: .96;
+}
+.listing-item:hover .button-group {
+  transform: translateZ(16px);
+  opacity: 1;
+}
+
+/* Soft gold "shine" sweep across the card on hover */
+.listing-item::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255,213,74,.06) 45%,
+    rgba(255,213,74,.16) 50%,
+    rgba(255,213,74,.06) 55%,
+    transparent 100%);
+  transform: translateX(-120%) rotate(8deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.listing-item:hover::after {
+  animation: sweep 900ms ease forwards;
+  opacity: 1;
+}
+
+@keyframes sweep {
+  0%   { transform: translateX(-120%) rotate(8deg); }
+  100% { transform: translateX(120%)  rotate(8deg); }
+}
+
+/* Gentle hover float (keeps moving while hovered) */
+.listing-item:hover {
+  animation: floaty 2.6s ease-in-out .95s infinite alternate;
+}
+@keyframes floaty {
+  from { transform: translateY(-10px) scale(1.015) rotateX(1.2deg); }
+  to   { transform: translateY(-14px) scale(1.018) rotateX(0.6deg); }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .listings-container { perspective: none; }
+  .listing-item,
+  .listing-item .listing-image,
+  .listing-item .listing-info h2,
+  .listing-item .button-group {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+  .listing-item:hover { box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+  .listing-item::after { display: none; }
+}
+
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* remove default margin on headings */
+h1, h2, h3, h4, h5, h6, p {
+  margin-top: 0 !important;
+}
+
+/* top-bar spacing control */
+.top-bar,
+.listings-page,
+.gator-logo {
+  margin-top: 14px;
+  padding-top: 0 !important;
+}
