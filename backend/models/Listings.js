@@ -32,6 +32,12 @@ const listing_schema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    // parent listing for grouping multiple warranties under one item
+    parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Listing',
+        required: false,
+    },
 }, {timestamps: true}
 )
 

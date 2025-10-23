@@ -321,14 +321,21 @@ body, html {
     border-color .3s ease,
     filter .3s ease;
   overflow: hidden; /* for shine sweep */
+  /* Improve rendering on hover to avoid blurriness */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, box-shadow;
+  /* keep a composited layer to avoid blurry rasterization after animations */
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Pop, lift, and richer shadow on hover */
 .listing-item:hover {
-  transform: translateY(-10px) scale(1.015) rotateX(1.2deg);
+  /* Use 2D transform only (no rotateX) to avoid browser blurring */
+  transform: translateY(-10px) scale(1.015);
   box-shadow: 0 28px 60px rgba(0,0,0,.55);
   border-color: #2f3947;
-  filter: saturate(1.06);
 }
 
 /* Subtle zoom of the image "toward" the user */
@@ -336,8 +343,16 @@ body, html {
   transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .3s ease;
   transform-origin: center;
 }
+.listing-item .listing-image {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* keep image on its own layer too */
+  transform: translateZ(0);
+}
 .listing-item:hover .listing-image {
-  transform: translateZ(24px) scale(1.05);
+  /* keep a subtle scale without heavy Z-translation to avoid blur */
+  transform: scale(1.04);
   filter: brightness(1.03);
 }
 
@@ -347,18 +362,18 @@ body, html {
   transform-origin: center;
 }
 .listing-item:hover .listing-info h2 {
-  transform: translateZ(14px);
+  transform: translateY(-2px);
   color: #8eb9ff; /* a touch brighter */
 }
 
 /* Button group rises a hair for depth */
 .listing-item .button-group {
   transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
-  transform: translateZ(10px);
+  transform: translateY(2px);
   opacity: .96;
 }
 .listing-item:hover .button-group {
-  transform: translateZ(16px);
+  transform: translateY(-2px);
   opacity: 1;
 }
 
@@ -387,13 +402,13 @@ body, html {
   100% { transform: translateX(120%)  rotate(8deg); }
 }
 
-/* Gentle hover float (keeps moving while hovered) */
+/* Gentle hover float adjusted to 2D transforms to avoid blurring */
 .listing-item:hover {
   animation: floaty 2.6s ease-in-out .95s infinite alternate;
 }
 @keyframes floaty {
-  from { transform: translateY(-10px) scale(1.015) rotateX(1.2deg); }
-  to   { transform: translateY(-14px) scale(1.018) rotateX(0.6deg); }
+  from { transform: translateY(-10px) scale(1.015); }
+  to   { transform: translateY(-14px) scale(1.018); }
 }
 
 /* Respect reduced-motion preferences */
@@ -429,3 +444,28 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 14px;
   padding-top: 0 !important;
 }
+
+/* ====== Accordion / grouping styles ====== */
+.listing-group { display: block; }
+.parent-header-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.parent-actions { display: flex; align-items: center; gap: 8px; }
+.child-count { background: rgba(255,255,255,0.04); padding: 4px 8px; border-radius: 999px; font-size: 0.85rem; color: var(--muted); }
+.expand-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 6px 8px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.expand-btn .chev { display: inline-block; transition: transform .18s ease; }
+.expand-btn.open .chev { transform: rotate(180deg); }
+
+/* child-listings collapsible area */
+.child-listings { overflow: hidden; max-height: 0; transition: max-height .36s cubic-bezier(.2,.8,.2,1), opacity .28s ease; opacity: 0; padding-top: 0; }
+.child-listings.open { max-height: 800px; opacity: 1; padding-top: 12px; }
+.child-item {
+  margin-top: 12px;
+  margin-left: 12px;
+  border-left: 2px dashed rgba(255,255,255,0.03);
+  padding-left: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Slightly reduce hover pop for child items to emphasize parent (2D transform only) */
+.child-item:hover { transform: translateY(-6px) scale(1.01); }

@@ -36,6 +36,8 @@ const getListing = async (req, res) => {
 const createListing = async (req, res) => {
     // existing text fields still work (JSON or multipart/form-data)
     const { name, description, cost, date, expiresAt } = req.body;
+    // optional parent id for grouping
+    const { parent } = req.body;
 
     // if a file was uploaded via "attachment", multer placed it on req.file
     let attachmentUrl = null;
@@ -45,6 +47,14 @@ const createListing = async (req, res) => {
     }
 
     try {
+        // validate parent id if provided
+        let parentId = undefined;
+        if (parent) {
+            if (!mongoose.Types.ObjectId.isValid(parent)) {
+                return res.status(400).json({ error: 'invalid parent id' });
+            }
+            parentId = parent;
+        }
         const listing = await Listing.create({
             name,
             description,
@@ -53,6 +63,7 @@ const createListing = async (req, res) => {
             // NEW fields (schema must include these):
             expiresAt: expiresAt ? new Date(expiresAt) : undefined,
             attachmentUrl: attachmentUrl || undefined,
+            parent: parentId,
         });
 
         res.status(201).json(listing);
