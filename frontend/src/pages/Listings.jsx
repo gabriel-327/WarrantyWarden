@@ -21,6 +21,7 @@ const Listings = () => {
     // NEW
     expiresAt: "",
     attachment: null,
+    itemImage: null,
   });
 
   const [searchTerm, setSearch] = useState("");
@@ -63,6 +64,7 @@ const Listings = () => {
       fd.append("cost", formData.cost);
       if (formData.expiresAt) fd.append("expiresAt", formData.expiresAt);
       if (formData.attachment) fd.append("attachment", formData.attachment);
+      if (formData.itemImage) fd.append("itemImage", formData.itemImage);
 
       const response = await fetch("http://localhost:3000/api/listings", {
         method: "POST",
@@ -89,6 +91,7 @@ const Listings = () => {
         cost: "",
         expiresAt: "",
         attachment: null,
+        itemImage: null,
       });
     } catch (err) {
       console.error("Error submitting data:", err);
@@ -147,61 +150,130 @@ const Listings = () => {
       <form onSubmit={handleSubmit} className="listing-form">
         <h2>Add a New Item</h2>
         <input
-          type="text"
-          name="name"
-          placeholder="Item name"
-          value={formData.name}
-          onChange={handleChange}
-          required
+            type="text"
+            name="name"
+            placeholder="Item name"
+            value={formData.name}
+            onChange={handleChange}
+            required
         />
         <input
-          type="text"
-          name="description"
-          placeholder="Serial number/identifier"
-          value={formData.description}
-          onChange={handleChange}
-          required
+            type="text"
+            name="description"
+            placeholder="Serial number/identifier"
+            value={formData.description}
+            onChange={handleChange}
+            required
         />
         <input
-          type="text"
-          name="cost"
-          placeholder="Manufacturer"
-          value={formData.cost}
-          onChange={handleChange}
-          required
+            type="text"
+            name="cost"
+            placeholder="Manufacturer"
+            value={formData.cost}
+            onChange={handleChange}
+            required
         />
 
         {/* NEW: Expiration Date */}
         <input
-          type="date"
-          name="expiresAt"
-          value={formData.expiresAt}
-          onChange={handleChange}
+            type="date"
+            name="expiresAt"
+            value={formData.expiresAt}
+            onChange={handleChange}
         />
 
         {/* NEW: Attachment (image or PDF) */}
+        <label htmlFor="attachment" style={{alignSelf: "flex-start"}}>Upload receipt (image or PDF)</label>
         <input
-          type="file"
-          name="attachment"
-          accept="image/*,application/pdf"
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              attachment: e.target.files?.[0] || null,
-            })
-          }
+            id="attachment"
+            type="file"
+            name="attachment"
+            accept="image/*,application/pdf"
+            onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  attachment: e.target.files?.[0] || null,
+                })
+            }
         />
 
+        {/* Item Image (photo of the product) */}
+        <label htmlFor="itemImage" style={{alignSelf: "flex-start"}}>Upload item photo</label>
+        <input
+            id="itemImage"
+            type="file"
+            name="itemImage"
+            accept="image/*"
+            onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  itemImage: e.target.files?.[0] || null,
+                })
+            }
+        />
+
+        {(formData.attachment || formData.itemImage) && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "1rem",
+              marginTop: "0.75rem",
+              alignItems: "flex-start",
+              flexWrap: "wrap",
+            }}
+          >
+            {/* Receipt preview (if it's an image) */}
+            {formData.attachment &&
+              formData.attachment.type.startsWith("image/") && (
+                <div style={{ textAlign: "center" }}>
+                  <img
+                    alt="receipt preview"
+                    style={{
+                      maxWidth: 120,
+                      borderRadius: 8,
+                      opacity: 0.9,
+                      border: "1px solid #ccc",
+                    }}
+                    src={URL.createObjectURL(formData.attachment)}
+                  />
+                  <p style={{ fontSize: "0.8rem", marginTop: "0.3rem" }}>Receipt</p>
+                </div>
+              )}
+
+            {/* Item image preview */}
+            {formData.itemImage && (
+              <div style={{ textAlign: "center" }}>
+                <img
+                  alt="item preview"
+                  style={{
+                    maxWidth: 120,
+                    borderRadius: 8,
+                    opacity: 0.9,
+                    border: "1px solid #ccc",
+                  }}
+                  src={URL.createObjectURL(formData.itemImage)}
+                />
+                <p style={{ fontSize: "0.8rem", marginTop: "0.3rem" }}>Item</p>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="submit-container">
-  <button type="submit">Add Item</button>
-</div>
+          <button type="submit">Add Item</button>
+        </div>
       </form>
 
       <div className="listings-container">
         {filteredListings.map((listing) => (
-          <div className="listing-item" key={listing._id}>
+            <div className="listing-item" key={listing._id}>
             <img
-              src={placeholderlogo}
+              src={
+                listing.itemImageUrl
+                  ? `http://localhost:3000${listing.itemImageUrl}`
+                  : placeholderlogo
+              }
               alt={listing.name}
               className="listing-image"
             />

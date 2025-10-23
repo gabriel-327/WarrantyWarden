@@ -32,6 +32,10 @@ const listing_schema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    itemImageUrl: {
+        type: String,
+        required: false,
+    },
 }, {timestamps: true}
 )
 

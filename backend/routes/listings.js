@@ -48,8 +48,15 @@ router.get('/', getAll);
 
 router.get('/:id', getListing);
 
-// now allows attachment uploads
-router.post('/', upload.single('attachment'), createListing);
+// Allow BOTH a receipt ("attachment") and an item photo ("itemImage")
+router.post(
+    '/',
+    upload.fields([
+        { name: 'attachment', maxCount: 1 },   // image or PDF receipt
+        { name: 'itemImage', maxCount: 1 },    // item photo
+    ]),
+    createListing
+);
 
 router.delete('/:id', deleteListing);
 

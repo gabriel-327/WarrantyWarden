@@ -37,11 +37,14 @@ const createListing = async (req, res) => {
     // existing text fields still work (JSON or multipart/form-data)
     const { name, description, cost, date, expiresAt } = req.body;
 
-    // if a file was uploaded via "attachment", multer placed it on req.file
+    // If files were uploaded via fields(), multer puts them on req.files
     let attachmentUrl = null;
-    if (req.file && req.file.filename) {
-        // served by: app.use("/uploads", express.static("uploads"))
-        attachmentUrl = `/uploads/${req.file.filename}`;
+    let itemImageUrl = null;
+    if (req.files?.attachment?.[0]?.filename) {
+        attachmentUrl = `/uploads/${req.files.attachment[0].filename}`;
+    }
+    if (req.files?.itemImage?.[0]?.filename) {
+        itemImageUrl = `/uploads/${req.files.itemImage[0].filename}`;
     }
 
     try {
@@ -53,6 +56,7 @@ const createListing = async (req, res) => {
             // NEW fields (schema must include these):
             expiresAt: expiresAt ? new Date(expiresAt) : undefined,
             attachmentUrl: attachmentUrl || undefined,
+            itemImageUrl: itemImageUrl || undefined,
         });
 
         res.status(201).json(listing);
