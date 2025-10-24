@@ -156,7 +156,7 @@ const Listings = () => {
     return () => window.removeEventListener("resize", recompute);
   }, [listings]);
 
-  // group parents (top-level) from filtered listings
+  // group parents (top-level) from filtered listingss
   const parentListings = filteredListings.filter((l) => !l.parent);
 
   return (

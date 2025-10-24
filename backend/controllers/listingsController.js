@@ -77,7 +77,7 @@ const createListing = async (req, res) => {
     }
 };
 
-//delete listing
+//delete listingg
 const deleteListing = async (req, res) => {
     try{
         if(!mongoose.Types.ObjectId.isValid(req.params.id)){

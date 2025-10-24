@@ -27,7 +27,7 @@ const listing_schema = new mongoose.Schema({
         type: Date,
         required: false,
     },
-    //for user uploaded receipts and attachments
+    //for user uploaded receipts and attachmentss
     attachmentUrl: {
         type: String,
         required: false,
