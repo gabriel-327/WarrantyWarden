@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+﻿import mongoose from 'mongoose'
 
 const listing_schema = new mongoose.Schema({
     name: {
@@ -27,11 +27,18 @@ const listing_schema = new mongoose.Schema({
         type: Date,
         required: false,
     },
-    //for user uploaded receipts and attachments
+    //for user uploaded receipts and attachmentss
     attachmentUrl: {
         type: String,
         required: false,
     },
+    // parent listing for grouping multiple warranties under one item
+    parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Listing',
+        required: false,
+    },
+    // item photo url
     itemImageUrl: {
         type: String,
         required: false,
@@ -41,4 +48,4 @@ const listing_schema = new mongoose.Schema({
 
 const Listing = mongoose.model('Listing', listing_schema);
 
-export default Listing; 
+export default Listing;

@@ -1,4 +1,4 @@
-import Listing from '../models/Listings.js'
+﻿import Listing from '../models/Listings.js'
 import mongoose from 'mongoose';
 
 //get all
@@ -36,6 +36,8 @@ const getListing = async (req, res) => {
 const createListing = async (req, res) => {
     // existing text fields still work (JSON or multipart/form-data)
     const { name, description, cost, date, expiresAt } = req.body;
+    // optional parent id for grouping
+    const { parent } = req.body;
 
     // If files were uploaded via fields(), multer puts them on req.files
     let attachmentUrl = null;
@@ -48,6 +50,14 @@ const createListing = async (req, res) => {
     }
 
     try {
+        // validate parent id if provided
+        let parentId = undefined;
+        if (parent) {
+            if (!mongoose.Types.ObjectId.isValid(parent)) {
+                return res.status(400).json({ error: 'invalid parent id' });
+            }
+            parentId = parent;
+        }
         const listing = await Listing.create({
             name,
             description,
@@ -56,6 +66,7 @@ const createListing = async (req, res) => {
             // NEW fields (schema must include these):
             expiresAt: expiresAt ? new Date(expiresAt) : undefined,
             attachmentUrl: attachmentUrl || undefined,
+            parent: parentId,
             itemImageUrl: itemImageUrl || undefined,
         });
 
@@ -66,7 +77,7 @@ const createListing = async (req, res) => {
     }
 };
 
-//delete listing
+//delete listingg
 const deleteListing = async (req, res) => {
     try{
         if(!mongoose.Types.ObjectId.isValid(req.params.id)){
