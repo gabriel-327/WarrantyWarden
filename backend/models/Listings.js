@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+﻿import mongoose from 'mongoose'
 
 const listing_schema = new mongoose.Schema({
     name: {
@@ -38,9 +38,14 @@ const listing_schema = new mongoose.Schema({
         ref: 'Listing',
         required: false,
     },
+    // item photo url
+    itemImageUrl: {
+        type: String,
+        required: false,
+    },
 }, {timestamps: true}
 )
 
 const Listing = mongoose.model('Listing', listing_schema);
 
-export default Listing; 
+export default Listing;

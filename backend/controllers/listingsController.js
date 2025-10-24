@@ -1,4 +1,4 @@
-import Listing from '../models/Listings.js'
+﻿import Listing from '../models/Listings.js'
 import mongoose from 'mongoose';
 
 //get all
@@ -39,11 +39,14 @@ const createListing = async (req, res) => {
     // optional parent id for grouping
     const { parent } = req.body;
 
-    // if a file was uploaded via "attachment", multer placed it on req.file
+    // If files were uploaded via fields(), multer puts them on req.files
     let attachmentUrl = null;
-    if (req.file && req.file.filename) {
-        // served by: app.use("/uploads", express.static("uploads"))
-        attachmentUrl = `/uploads/${req.file.filename}`;
+    let itemImageUrl = null;
+    if (req.files?.attachment?.[0]?.filename) {
+        attachmentUrl = `/uploads/${req.files.attachment[0].filename}`;
+    }
+    if (req.files?.itemImage?.[0]?.filename) {
+        itemImageUrl = `/uploads/${req.files.itemImage[0].filename}`;
     }
 
     try {
@@ -64,6 +67,7 @@ const createListing = async (req, res) => {
             expiresAt: expiresAt ? new Date(expiresAt) : undefined,
             attachmentUrl: attachmentUrl || undefined,
             parent: parentId,
+            itemImageUrl: itemImageUrl || undefined,
         });
 
         res.status(201).json(listing);
